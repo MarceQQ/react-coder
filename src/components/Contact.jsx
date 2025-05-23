@@ -1,4 +1,6 @@
 import { useForm } from "react-hook-form";
+import { createOrder } from "../services/orderService";
+import { useCart } from "../context/CartContext";
 import {
   Box,
   Button,
@@ -10,6 +12,7 @@ import {
   useToast,
 } from "@chakra-ui/react";
 
+
 const Contact = ({ onPurchase }) => {
   const {
     register,
@@ -18,25 +21,46 @@ const Contact = ({ onPurchase }) => {
   } = useForm();
 
   const toast = useToast();
+  const { carrito, obtenerPrecioTotal } = useCart();
 
-  const onSubmit = (data) => {
-    const { nombre, apellido, email, suscripcion } = data;
+  const onSubmit = async (data) => {
+    const { nombre, apellido, email } = data;
 
+    const orderData = {
+      cliente: { nombre, apellido, email },
+      productos: carrito.map((prod) => ({
+        id: prod.id,
+        titulo: prod.titulo,
+        cantidad: prod.cantidad,
+        precio: prod.precio,
+      })),
+      total: obtenerPrecioTotal(),
+      fecha: new Date(),
+    };
 
-    if (typeof onPurchase === "function") {
-      onPurchase();
+    try {
+      const orderId = await createOrder(orderData);
+
+      if (typeof onPurchase === "function") {
+        onPurchase();
+      }
+
+      toast({
+        title: "Orden generada",
+        description: `Gracias por tu compra ${nombre} ${apellido}. Tu número de orden es: ${orderId}`,
+        status: "success",
+        duration: 6000,
+        isClosable: true,
+      });
+    } catch (error) {
+      toast({
+        title: "Error",
+        description: "Hubo un problema al procesar tu orden. Intenta nuevamente.",
+        status: "error",
+        duration: 5000,
+        isClosable: true,
+      });
     }
-
-
-    toast({
-      title: "Confirmación de compra",
-      description: `Gracias por tu compra ${nombre} ${apellido}. ` +
-        `Hemos enviado un resumen a ${email}.` +
-        `${suscripcion ? " ¡Bienvenido a nuestro programa de beneficios!" : ""}`,
-      status: "success",
-      duration: 5000,
-      isClosable: true,
-    });
   };
 
   return (
@@ -66,12 +90,6 @@ const Contact = ({ onPurchase }) => {
               placeholder="Email"
               {...register("email", { required: true })}
             />
-          </FormControl>
-
-          <FormControl>
-            <Checkbox {...register("suscripcion")}>
-              Quiero suscribirme
-            </Checkbox>
           </FormControl>
 
           <Button type="submit" colorScheme="teal">
