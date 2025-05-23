@@ -1,14 +1,35 @@
+# 🛒 Proyecto E-Commerce con React + Firebase
 
-# React + Vite
+Este es un proyecto de e-commerce desarrollado con **React**, que permite a los usuarios explorar productos, agregarlos al carrito y completar la compra a través de un formulario.
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+La aplicación consume productos almacenados en **Firebase Firestore** y utiliza **Chakra UI** como librería de componentes para lograr un diseño moderno, responsive y accesible.
 
-Currently, two official plugins are available:
+---
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## 🚀 Funcionalidades
 
-## Expanding the ESLint configuration
+- Listado de productos desde Firestore
+- Filtro por categoría (nivel)
+- Detalle individual del producto
+- Agregado y gestión de productos en el carrito
+- Validación de stock y cantidades
+- Formulario de compra con validación
+- Generación y almacenamiento de órdenes en Firestore
+- Feedback visual mediante toasts
 
-If you are developing a production application, we recommend using TypeScript and enable type-aware lint rules. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
->>>>>>> 3177422 (Primer commit)
+---
+
+## 🧰 Tecnologías utilizadas
+
+- ⚛️ **React**: Librería principal para la construcción de interfaces.
+- 🔥 **Firebase Firestore**: Base de datos en tiempo real para productos y órdenes.
+- 💅 **Chakra UI**: Sistema de diseño accesible y moderno basado en componentes.
+- 📦 **React Hook Form**: Para validación y manejo de formularios.
+- 📁 **Context API**: Para manejar el estado global del carrito.
+
+---
+
+🧑‍💻 Autor
+Desarrollado por Marcelo Villalba – villalbamarcelo93@gmail.com
+
+
